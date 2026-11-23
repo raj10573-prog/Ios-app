@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="hi"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050b18"><title>MY JARVIS AI</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 38%,#102b49,#071326 42%,#030712 85%);color:#e8fbff;font-family:system-ui,Arial;text-align:center;padding:24px 18px}
+h1{margin:18px 0 5px;color:#67edff;letter-spacing:4px;font-size:27px;text-shadow:0 0 18px #00cfff}.sub{color:#9dbdce;margin:0}
+.orb{width:190px;height:190px;border:2px solid #35dcff;border-radius:50%;margin:48px auto 28px;display:grid;place-items:center;box-shadow:0 0 22px #00cfff,inset 0 0 30px #0879a866;position:relative}
+.orb:before,.orb:after{content:"";position:absolute;border:1px solid #168db9;border-radius:50%;inset:12px}.orb:after{inset:-12px;border-style:dashed;opacity:.6}
+.robot{font-size:68px;filter:drop-shadow(0 0 12px #00d9ff)}
+button{border:0;border-radius:28px;padding:15px 22px;margin:7px;background:#00c8ee;color:#00121b;font-weight:700;font-size:16px}
+.panel{max-width:520px;margin:18px auto;background:#08182a;border:1px solid #16445d;border-radius:16px;padding:16px;text-align:left}
+#status{color:#9beaff;min-height:25px;margin:22px 0 8px}#answer{white-space:pre-wrap;line-height:1.5;color:white;min-height:24px}
+input{width:100%;padding:13px;border-radius:10px;border:1px solid #28627d;background:#06111f;color:white;font-size:16px}.row{display:flex;gap:8px}.row button{white-space:nowrap}.small{font-size:12px;color:#89a8b8;line-height:1.5}
+</style></head><body>
+<h1>MY JARVIS AI</h1><p class="sub">आपका हिंदी वॉइस असिस्टेंट</p>
+<div class="orb"><div class="robot">🤖</div></div>
+<button onclick="listen()">🎙️ JARVIS से बात करें</button>
+<button onclick="say('नमस्ते सर! मैं आपका जार्विस हूँ।')">🔊 आवाज़ जाँचें</button>
+<div id="status">मैं तैयार हूँ सर। माइक्रोफोन दबाकर बोलें।</div>
+<div class="panel"><b>आपकी कमांड</b><p id="heard" class="small">अभी कोई कमांड नहीं मिली।</p><b>JARVIS का जवाब</b><p id="answer">नमस्ते सर! मैं आपकी मदद के लिए तैयार हूँ।</p></div>
+<div class="panel"><b>लिखकर भी कमांड दें</b><div class="row" style="margin-top:10px"><input id="typed" placeholder="जैसे: समय बताओ" onkeydown="if(event.key==='Enter')sendTyped()"><button onclick="sendTyped()">भेजें</button></div></div>
+<p class="small">कमांड: समय बताओ · तारीख बताओ · गूगल खोलो · यूट्यूब खोलो · नमस्ते</p>
+<script>
+function setStatus(t){document.getElementById('status').textContent=t}
+function showJarvisAnswer(t){document.getElementById('answer').textContent=t}
+function say(t){if(window.Jarvis)Jarvis.speak(t);else showJarvisAnswer(t)}
+function listen(){if(window.Jarvis){Jarvis.startListening()}else setStatus('Android ऐप में ही माइक्रोफोन सुविधा उपलब्ध है।')}
+function onJarvisStatus(t){setStatus(t)}
+function onJarvisError(t){setStatus(t)}
+function onJarvisResult(t){document.getElementById('heard').textContent=t;setStatus('कमांड मिल गई।');Jarvis.command(t)}
+function sendTyped(){let el=document.getElementById('typed');if(el.value.trim()){document.getElementById('heard').textContent=el.value;Jarvis.command(el.value);el.value=''}}
+</script></body></html>
